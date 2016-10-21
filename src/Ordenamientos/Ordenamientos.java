@@ -100,10 +100,10 @@ public class Ordenamientos<Item>{
                 for (int j = i; j>=gap && array[j].compareTo(array[j-gap])<0; j-=gap) {
                     tmp=array[j];
                     array[j]=array[j-gap];
-                    array[j-gap]=(Comparable) tmp;
+                    array[j-gap]=   tmp;
                 }
             }
-             gap/=2;
+            gap/=2;
         }
         return array;
     }
@@ -118,6 +118,18 @@ public class Ordenamientos<Item>{
                     array[j+1]=(Comparable)tmp;
                 }
             }
+        }
+        return array;
+    }
+     
+    public Comparable[] quickSort(Comparable[] array, int inf, int sup){
+        int i,j,p;
+        i=inf;
+        j=sup;
+        if(inf>=sup)
+            return array;
+        while(i!=j){
+            
         }
         return array;
     }
