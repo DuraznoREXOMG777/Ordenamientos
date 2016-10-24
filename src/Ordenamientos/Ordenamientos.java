@@ -5,6 +5,8 @@
  */
 package Ordenamientos;
 
+import java.util.Random;
+
 /**
  *
  * @author Yue
@@ -134,10 +136,23 @@ public class Ordenamientos<Item>{
         return array;
     }
     
+    public Item[] shufllingSort(Item[] array){
+        Random rnd=new Random();
+        Item tmp;
+        int r;
+        for (int i = 0; i < array.length; i++) {
+            r=rnd.nextInt(i+1);
+            tmp= array[r];
+            array[r]=array[i];
+            array[i]=tmp;
+        }
+        return array;
+    }
+    
     public static void main(String[] args) {
         Ordenamientos ss=new Ordenamientos<Integer>();
         Integer[] in={5,1,2,10,2,4,3,3};
-        in=(Integer[]) ss.shellSort(in);
+        in=(Integer[]) ss.shufllingSort(in);
         for (Integer in1 : in) {
             System.out.println(in1);
         }
