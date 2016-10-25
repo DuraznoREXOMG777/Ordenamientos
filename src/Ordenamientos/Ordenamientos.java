@@ -124,7 +124,7 @@ public class Ordenamientos<Item>{
         return array;
     }
      
-    public Comparable[] quickSort(Comparable[] array, int inf, int sup){
+    public Comparable[] quickSort(Comparable[] array, int inf, int sup){ //No Terminado
         int i,j,p;
         i=inf;
         j=sup;
@@ -149,10 +149,42 @@ public class Ordenamientos<Item>{
         return array;
     }
     
+    public Comparable[] mergeSort(Comparable[] array){ //No Terminado
+        Comparable[] result;
+        if(array.length<=1)
+            return array;
+        else{
+            Comparable[] right, left;
+            int n=Math.floorDiv(array.length, 2);
+            left=new Comparable[n];
+            right=new Comparable[array.length-n];
+            for (int i = 0; i < n; i++)
+                left[i]=array[i];
+            for (int i = 0; i < right.length; i++)
+                right[i]=array[n+i];
+            left=mergeSort(left);
+            right=mergeSort(right);
+            result=merge(left, right);
+            return result;
+        }
+    }
+    
+    private Comparable[] merge(Comparable[] left, Comparable[] right){
+        Comparable[] result=new Comparable[right.length+left.length];
+        int i=0,j=0;
+        for (int k = 0; k < result.length; k++) {
+            if(left[i].compareTo(right[j])>0)
+                result[k]=left[i++];
+            else
+                result[k]=right[j++];
+        }
+        return result;
+    }
+    
     public static void main(String[] args) {
         Ordenamientos ss=new Ordenamientos<Integer>();
         Integer[] in={5,1,2,10,2,4,3,3};
-        in=(Integer[]) ss.shufllingSort(in);
+        in=(Integer[]) ss.mergeSort(in);
         for (Integer in1 : in) {
             System.out.println(in1);
         }
