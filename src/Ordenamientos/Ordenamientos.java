@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class Ordenamientos<Item>{
 
-    public Comparable[] insertionSort(Comparable a[]){
+    public void insertionSort(Comparable a[]){
         Item item;
         int i;
         for (int j = 1; j < a.length; j++) {
@@ -25,7 +25,6 @@ public class Ordenamientos<Item>{
             }
             a[i+1]=(Comparable) item;
         }
-        return a;
     }
     
     public void insertionSortInverso(Comparable a[]){
@@ -42,7 +41,7 @@ public class Ordenamientos<Item>{
         }
     }
     
-    public Comparable[] selectionSort(Comparable array[]){
+    public void selectionSort(Comparable array[]){
         Item item,tmp;
         int i;
         for (int j = 0; j < array.length; j++) {
@@ -58,10 +57,9 @@ public class Ordenamientos<Item>{
                 array[j]=(Comparable) tmp;
             }
         }
-        return array;
     }
     
-    public Comparable[] selectionSortInvertido(Comparable array[]){
+    public void selectionSortInvertido(Comparable array[]){
         Item item,tmp;
         int i;
         for (int j = 0; j < array.length; j++) {
@@ -77,10 +75,9 @@ public class Ordenamientos<Item>{
                 array[j]=(Comparable) tmp;
             }
         }
-        return array;
     }
     
-    public Comparable[] bubbleSort(Comparable array[]){
+    public void bubbleSort(Comparable array[]){
         Comparable tmp;
         for (int i = 2; i < array.length; i++) {
             for (int j = 0; j <= array.length-i; j++) {
@@ -91,10 +88,9 @@ public class Ordenamientos<Item>{
                 }
             }
         }
-        return array;
     }
     
-    public Comparable[] shellSort(Comparable[] array){
+    public void shellSort(Comparable[] array){
         int gap=5;
         Comparable tmp;
         while(gap>0){
@@ -107,10 +103,9 @@ public class Ordenamientos<Item>{
             }
             gap/=2;
         }
-        return array;
     }
     
-     public Comparable[] bubbleSortInvertido(Comparable array[]){
+     public void bubbleSortInvertido(Comparable array[]){
         Item tmp;
         for (int i = 2; i < array.length; i++) {
             for (int j = 0; j <= array.length-i; j++) {
@@ -121,7 +116,6 @@ public class Ordenamientos<Item>{
                 }
             }
         }
-        return array;
     }
      
     public Comparable[] quickSort(Comparable[] array, int inf, int sup){ //No Terminado
@@ -149,42 +143,40 @@ public class Ordenamientos<Item>{
         return array;
     }
     
-    public Comparable[] mergeSort(Comparable[] array){ //No Terminado
-        Comparable[] result;
-        if(array.length<=1)
-            return array;
-        else{
-            Comparable[] right, left;
-            int n=Math.floorDiv(array.length, 2);
-            left=new Comparable[n];
-            right=new Comparable[array.length-n];
-            for (int i = 0; i < n; i++)
-                left[i]=array[i];
-            for (int i = 0; i < right.length; i++)
-                right[i]=array[n+i];
-            left=mergeSort(left);
-            right=mergeSort(right);
-            result=merge(left, right);
-            return result;
-        }
+    public void mergeSort(Comparable[] A){
+        Comparable[] aux= new Comparable[A.length];  //Generas un arreglo Auxiliar.
+        sort(A,aux,0,A.length-1); //Al terminar la recursión de Sort muere Aux, mientras sigue siendo el mismo.
+    }
+    public void sort(Comparable []A, Comparable []aux, int low, int hi){
+        if(hi<=low)
+            return; //Termina la recursión
+        int mid= low +(hi-low)/2; //Sort no los acomoda como dice su nombre. Sort los Separa.
+        sort(A,aux, low, mid);
+        sort(A, aux, mid+1, hi);
+        merge(A, aux, low, mid, hi);
     }
     
-    private Comparable[] merge(Comparable[] left, Comparable[] right){
-        Comparable[] result=new Comparable[right.length+left.length];
-        int i=0,j=0;
-        for (int k = 0; k < result.length; k++) {
-            if(left[i].compareTo(right[j])>0)
-                result[k]=left[i++];
+    public void merge(Comparable []A, Comparable []aux, int low, int mid, int hi){
+        for(int k=low; k<=hi;k++)
+            aux[k]=A[k];
+        int i=low;
+        int j=mid+1;
+        for(int k=low; k<=hi; k++){
+            if(i>mid)
+                A[k]=aux[j++];
+            else  if(j>hi)
+                A[k]=aux[i++];
+            else if(aux[i].compareTo(aux[j])<0)
+              A[k]=aux[i++];
             else
-                result[k]=right[j++];
+              A[k]=aux[j++];
         }
-        return result;
     }
     
     public static void main(String[] args) {
         Ordenamientos ss=new Ordenamientos<Integer>();
         Integer[] in={5,1,2,10,2,4,3,3};
-        in=(Integer[]) ss.mergeSort(in);
+        ss.mergeSort(in);
         for (Integer in1 : in) {
             System.out.println(in1);
         }
